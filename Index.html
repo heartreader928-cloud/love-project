@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Do You Love Me?</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
+
+body{
+height:100vh;
+background:linear-gradient(135deg,#ff9a9e,#fad0c4,#fcb69f);
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+position:relative;
+}
+
+/* PAGE 1 */
+#page1{
+text-align:center;
+color:#fff;
+position:absolute;top:0;left:0;width:100%;height:100%;
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+
+h1{font-size:2.3rem;margin-bottom:30px;}
+button{
+padding:14px 32px;
+font-size:1.2rem;
+border:none;
+border-radius:30px;
+cursor:pointer;
+transition:.4s ease;
+margin:5px;
+}
+#yesBtn{background:#ff4d6d;color:white;}
+#noBtn{background:#555;color:white;}
+
+/* LOADING */
+#loading{
+display:none;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+position:absolute;top:0;left:0;width:100%;height:100%;
+color:white;
+background:linear-gradient(135deg,#fad0c4,#ffd1ff,#ffafbd);
+}
+
+#loading h2{font-size:1.8rem;margin-bottom:15px;}
+.loader{
+width:60px;height:60px;
+border:6px solid #ffffff55;
+border-top:6px solid #ff4d6d;
+border-radius:50%;
+animation:spin 1s linear infinite;
+margin-bottom:20px;
+}
+
+.teddy{font-size:60px;margin-bottom:20px;}
+
+/* FINAL PAGE */
+#final{
+display:none;
+text-align:center;
+color:white;
+position:absolute;top:0;left:0;width:100%;height:100%;
+background:linear-gradient(135deg,#fad0c4,#ffd1ff,#ffafbd);
+overflow:hidden;
+padding-top:50px;
+}
+
+/* Hearts & Stars */
+.heart,.star{
+position:absolute;
+font-size:24px;
+animation:float 5s linear infinite;
+}
+.heart{color:#ff4d6d;}
+.star{color:#fffacd;}
+
+/* Animations */
+@keyframes float{
+0%{transform:translateY(0) scale(1);opacity:1}
+50%{transform:translateY(-150px) scale(1.3);opacity:0.7}
+100%{transform:translateY(-300px) scale(1);opacity:0}
+}
+
+@keyframes spin{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<div id="page1">
+<h1>Do you love me? 💖</h1>
+<button id="yesBtn">Yes</button>
+<button id="noBtn">No</button>
+</div>
+
+<!-- LOADING -->
+<div id="loading">
+<div class="teddy">🧸</div>
+<h2>Loading love 💕</h2>
+<div class="loader"></div>
+</div>
+
+<!-- FINAL -->
+<div id="final">
+<h1 style="font-size:2.5rem;">I love you too 💖</h1>
+<p style="font-size:1.3rem;">Forever & Always ❤️</p>
+</div>
+
+<script>
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+const page1=document.getElementById("page1");
+const loading=document.getElementById("loading");
+const finalPage=document.getElementById("final");
+
+let scale=1;
+
+// No button → Yes bada hota rahe
+noBtn.addEventListener('click', ()=>{
+scale+=0.15;
+yesBtn.style.transform=`scale(${scale})`;
+});
+
+// Create hearts and stars on final page
+function createDecoration(){
+const type=Math.random()<0.5?'heart':'star';
+const deco=document.createElement("div");
+deco.className=type;
+deco.innerText=type==='heart'?'❤️':'⭐';
+deco.style.left=Math.random()*100+"vw";
+deco.style.bottom="0px";
+deco.style.fontSize=(18+Math.random()*20)+"px";
+document.body.appendChild(deco);
+setTimeout(()=>deco.remove(),5000);
+}
+
+// Yes click → show loading then final
+yesBtn.addEventListener('click', ()=>{
+page1.style.display="none";
+loading.style.display="flex";
+
+setTimeout(()=>{
+loading.style.display="none";
+finalPage.style.display="block";
+
+// Decorations floating
+setInterval(createDecoration,300);
+
+},5000);
+});
+</script>
+</body>
+</html>
